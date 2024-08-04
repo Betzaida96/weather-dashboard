@@ -77,3 +77,31 @@ function displayWeatherForecast(forecasts) {
 
     $('#forecast-cards').html(forecastHtml);
 }
+
+function saveSearchHistory(city) {
+    //save search history in local storage or an array and update the UI
+    var searchHistory = JSON.parse(localStorage.getItem('searchHistory')) || [];
+    if (!searchHistory.includes(city)){
+        searchHistory.push(city);
+        localStorage.setItem('searchHistory', JSON.stringify(searchHistory));
+        updateSearchHistoryUI(searchHistory);
+    }
+}
+
+function updateSearchHistoryUI(history){
+    var historyHtml = history.map(function(city){
+        return `<button type="button" class="history-item">${city}</button>`;
+    }).join('');
+    $('#search-history').html(historyHtml);
+
+    //Add click event to the history items
+    $('.history-item').on('click', function(){
+        fetchCityWeather($(this).text());
+    });
+}
+
+//Initialize search history from local storage
+$(document).ready(function(){
+    var searchHistory = JSON.parse(localStorage.getItem('searchHistory')) ||[];
+    updateSearchHistoryUI(searchHistory);
+});
