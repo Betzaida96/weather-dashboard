@@ -1,0 +1,158 @@
+/* General Styles */
+body {
+    font-family: 'Maiden Orange', sans-serif;
+    background-color: #c56cc2;
+    color: black;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    text-align: center;
+    padding: 20px;
+    background-color: #ff00ee;
+    color: #fff;
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+/* Search Container */
+.search-container {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+#search-input {
+    padding: 10px;
+    width: 100%;
+    max-width: 300px;
+    box-sizing: border-box;
+}
+
+.search-button-container {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+#searchButton {
+    padding: 10 px 20px;
+    background-color: #ff00ee;
+    color: #fff;
+    border: solid;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 15px;
+    display: inline-block;
+}
+
+/* Button */
+.btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+/* Current Weather */
+#current-weather {
+    text-align: center;
+}
+
+#current-weather-info {
+    background-color: #ec85b5;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Forecast Cards */
+#forecast-cards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+#forecast-cards div {
+    background-color: #e6b0d8;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border: 1px solid #ddd;
+    width: 150px;
+    text-align: center;
+}
+
+#forecast-cards img {
+    width: 50px;
+    height: 50px;
+}
+
+/* Search History */
+#search-history {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.history-item {
+    margin: 5px;
+    padding: 10px;
+    background-color: #fad3f5;
+    border: 1px solid #d6a6d6;
+    border-radius: 5px;
+    cursor: pointer;
+    display: inline-block;
+}
+
+.history-item:hover {
+    background-color: #e232c4;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    #current-weather-info,
+    #forecast-cards div {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    #forecast-cards {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    #search-input {
+        width: 90%;
+        max-width: none;
+    }
+
+    .btn-primary {
+        width: 90%;
+    }
+}
+
+@media (max-width: 480px) {
+    header {
+        font-size: 20px;
+        padding: 15px;
+    }
+
+    #search-input {
+        font-size: 16px;
+        padding: 8px;
+    }
+
+    .btn-primary {
+        font-size: 16px;
+        padding: 10px;
+    }
+
+    #forecast-cards div {
+        width: 100%;
+        margin: 10px 0;
+    }
+
+    #forecast-cards img {
+        width: 40px;
+        height: 40px;
+    }
+}

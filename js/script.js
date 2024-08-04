@@ -1,26 +1,47 @@
 document.getElementById('searchButton').addEventListener('click', function() {
-    var city = document.getElementById('search-input').ariaValueMax;
+    var city = document.getElementById('search-input').value;
     if (city) {
-        fetchCityWeather(city);
+        getCoordinates(city);
     }
 });
 
-function fetchCityWeather(lat, lon) {
+function getCoordinates(city) {
     var apiKey = '83d61eed31a0a84a3b429edf288391f6'
-    var apiWeatherUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=83d61eed31a0a84a3b429edf288391f6`
+    var apiGeoUrl = `https://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=1&appid=${apiKey}`;
     
     $.ajax({
-        url:apiWeatherUrl,
+        url:apiGeoUrl,
+        success: function(response) {
+            if (response.length >0) {
+            var lat = response[0].lat;
+            var lon = response[0].lon;
+            fetchCityWeather(lat,lon, city);
+        } else {
+            alert('City not found');
+        }
+
+    },
+    error: function(){
+        alert('Error fetching city coordinates');
+    }
+  });
+}
+
+function fetchCityWeather(lat, lon, city) {
+    var apiKey = '83d61eed31a0a84a3b429edf288391f6'
+    var apiWeatherUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=imperial`;
+
+    $.ajax({
+        url: apiWeatherUrl,
         success: function(response) {
             displayCurrentWeather(response);
             saveSearchHistory(city);
-            fetchWeatherForecast(response.coord.lat, response.coord.lon);
-
+            fetchWeatherForecast(lat, lon);
         },
-        error: function() {
+        error:function() {
             //handle error
+            alert('Error fetching weather data');
         }
-
     });
 }
 
@@ -28,26 +49,26 @@ function displayCurrentWeather(data) {
     var currentWeatherHtml = `
     <div>
         <h3>${data.name} (${new Date().toLocaleDateString()})</h3>
-        <p><img src="https://openweathermap.org/imp/wn/${data.weather[0].icon}.png" alt="weather icon></p>
+        <p><img src="https://openweathermap.org/img/wn/${data.weather[0].icon}.png"> alt="weather icon></p>
         <p>Temperature: ${data.main.temp} °F</p>
         <p>Humidity: ${data.main.humidity}%</p>
         <p>Wind Speed: ${data.wind.speed} mph</p>
         </div>
         `;
-        $(current-weather-info).html(currentWeatherHtml);
+        $('#current-weather-info').html(currentWeatherHtml);
 }
 
 function fetchWeatherForecast(lat, lon) {
-    var apiKey = '83d61eed31a0a84a3b429edf288391f6'
-    var apiWeatherUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=83d61eed31a0a84a3b429edf288391f6`
+    var apiKey = '83d61eed31a0a84a3b429edf288391f6';
+    var apiForecastUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${apiKey}&units=imperial`;
 
     $.ajax({
-        url: apiForecasUrl,
+        url: apiForecastUrl,
         success: function(response) {
             displayWeatherForecast(response.list);
         },
-        error:function() {
-            //handle error
+        error: function() {
+            alert('Error fetching weather forecast.');
         }
     });
 }
@@ -96,7 +117,8 @@ function updateSearchHistoryUI(history){
 
     //Add click event to the history items
     $('.history-item').on('click', function(){
-        fetchCityWeather($(this).text());
+        var city =$(this).text();
+        getCoordinates(city);
     });
 }
 
