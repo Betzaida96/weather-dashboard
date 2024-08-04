@@ -49,7 +49,7 @@ function displayCurrentWeather(data) {
     var currentWeatherHtml = `
     <div>
         <h3>${data.name} (${new Date().toLocaleDateString()})</h3>
-        <p><img src="https://openweathermap.org/img/wn/${data.weather[0].icon}.png"> alt="weather icon></p>
+        <p><img src="https://openweathermap.org/img/wn/${data.weather[0].icon}.png"></p>
         <p>Temperature: ${data.main.temp} °F</p>
         <p>Humidity: ${data.main.humidity}%</p>
         <p>Wind Speed: ${data.wind.speed} mph</p>
