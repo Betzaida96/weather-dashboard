@@ -29,7 +29,7 @@ This project is licensed under the MIT License
 
 ## Links
 Github: https://github.com/Betzaida96/weather-dashboard
-Live site: 
+Live site: https://betzaida96.github.io/weather-dashboard/
 
 ## Photos
 ![current](assets/photos/current-weather.jpg)
